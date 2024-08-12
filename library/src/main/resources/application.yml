@@ -1,0 +1,19 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: users
+  config:
+    import: optional:configserver:http://localhost:8888
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/lms
+    username: postgres
+    password: 1651
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+

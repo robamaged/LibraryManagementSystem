@@ -3,10 +3,13 @@ package Borrowing;
 import com.example.library.Patron.Patron;
 import com.example.library.book.Book;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
-
+@Setter
+@Getter
 @Entity
 public class BorrowingRecord {
     @jakarta.persistence.Id
@@ -37,6 +40,17 @@ public class BorrowingRecord {
         this.returnDate = returnDate;
     }
 
+    public void setBook(Book book) {
+        this.book = book;
+    }
 
-    // Constructors, Getters, Setters
+    public void setPatron(Patron patron) {
+        this.patron = patron;
+    }
+
+    public void setBorrowDate(LocalDate borrowDate) {
+        this.borrowDate = borrowDate;
+    }
+
+// Constructors, Getters, Setters
 }

@@ -1,5 +1,6 @@
 package com.example.library.Patron;
 
+import Borrowing.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

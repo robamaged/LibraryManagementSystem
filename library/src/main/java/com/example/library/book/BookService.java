@@ -1,5 +1,6 @@
 package com.example.library.book;
 
+import Borrowing.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

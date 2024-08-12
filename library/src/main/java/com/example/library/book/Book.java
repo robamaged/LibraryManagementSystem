@@ -3,19 +3,28 @@ package com.example.library.book;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 
+@Getter
+@Setter
 @Entity
 public class Book {
     @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotNull(message = "Title is required")
     private String title;
+    @NotNull(message = "Author is required")
     private String author;
+    @NotNull(message = "Publication year is required")
     private int publicationYear;
+    @Size(min = 10, max = 13, message = "ISBN must be between 10 and 13 characters")
     private String isbn;
 
     public void setId(Long id) {
