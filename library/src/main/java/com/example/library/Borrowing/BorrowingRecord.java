@@ -1,4 +1,4 @@
-package Borrowing;
+package com.example.library.Borrowing;
 
 import com.example.library.Patron.Patron;
 import com.example.library.book.Book;
@@ -17,7 +17,9 @@ public class BorrowingRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @ManyToOne
+
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 

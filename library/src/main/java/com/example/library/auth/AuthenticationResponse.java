@@ -1,4 +1,4 @@
-package auth;
+package com.example.library.auth;
 
 import lombok.*;
 

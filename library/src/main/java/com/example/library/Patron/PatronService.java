@@ -1,12 +1,16 @@
 package com.example.library.Patron;
 
-import Borrowing.ResourceNotFoundException;
+import com.example.library.Borrowing.BorrowingRecordRepository;
+import com.example.library.Borrowing.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class PatronService {
+    @Autowired
+    private  BorrowingRecordRepository borrowingRecordRepository;
 
     @Autowired
     private PatronRepository patronRepository;
@@ -32,9 +36,18 @@ public class PatronService {
         return patronRepository.save(patron);
     }
 
-    public void deletePatron(Long id) {
-        Patron patron = patronRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patron not found"));
-        patronRepository.delete(patron);
+    @Transactional
+    public void deletePatron(Long patronId) {
+        Patron patron = patronRepository.findById(patronId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patron not found with id: " + patronId));
+
+        boolean hasActiveBorrowingRecords = borrowingRecordRepository.existsByPatronIdAndReturnDateIsNull(patronId);
+
+        if (hasActiveBorrowingRecords) {
+            throw new IllegalStateException("Cannot delete patron with active borrowing records.");
+        }
+
+        patronRepository.deleteById(patronId);
     }
 }
 

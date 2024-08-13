@@ -1,5 +1,6 @@
 package com.example.library.book;
 
+import com.example.library.Borrowing.BorrowingRecord;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,6 +9,20 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+
+
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.CascadeType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import java.util.List;
 
 
 @Getter
@@ -26,6 +41,10 @@ public class Book {
     private int publicationYear;
     @Size(min = 10, max = 13, message = "ISBN must be between 10 and 13 characters")
     private String isbn;
+
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BorrowingRecord> borrowingRecords;
 
     public void setId(Long id) {
         this.id = id;

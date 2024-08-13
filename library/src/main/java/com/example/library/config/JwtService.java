@@ -1,4 +1,4 @@
-package config;
+package com.example.library.config;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;

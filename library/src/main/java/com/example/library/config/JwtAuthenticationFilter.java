@@ -1,4 +1,4 @@
-package config;
+package com.example.library.config;
 
 
 
@@ -20,6 +20,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -56,8 +57,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     //&& isTokenValid ) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
-                        null,
-                        userDetails.getAuthorities()
+                        null
+                       // userDetails.getAuthorities()
                 );
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)

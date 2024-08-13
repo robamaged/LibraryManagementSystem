@@ -1,4 +1,4 @@
-package Borrowing;
+package com.example.library.Borrowing;
 
 import com.example.library.Patron.Patron;
 import com.example.library.Patron.PatronRepository;
@@ -23,10 +23,22 @@ public class BorrowingRecordService {
     @Autowired
     private PatronRepository patronRepository;
 
+
+
+
     @Transactional
     public BorrowingRecord borrowBook(Long bookId, Long patronId) {
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
-        Patron patron = patronRepository.findById(patronId).orElseThrow(() -> new ResourceNotFoundException("Patron not found"));
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found"));
+        Patron patron = patronRepository.findById(patronId)
+                .orElseThrow(() -> new ResourceNotFoundException("Patron not found"));
+
+        // Check if the book is currently borrowed
+        boolean isBookBorrowed = borrowingRecordRepository.existsByBookIdAndReturnDateIsNull(bookId);
+
+        if (isBookBorrowed) {
+            throw new IllegalStateException("Book is already borrowed by someone else.");
+        }
 
         BorrowingRecord borrowingRecord = new BorrowingRecord();
         borrowingRecord.setBook(book);

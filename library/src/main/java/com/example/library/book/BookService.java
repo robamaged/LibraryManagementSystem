@@ -1,12 +1,16 @@
 package com.example.library.book;
 
-import Borrowing.ResourceNotFoundException;
+import com.example.library.Borrowing.BorrowingRecordRepository;
+import com.example.library.Borrowing.ResourceNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class BookService {
+    @Autowired
+    private BorrowingRecordRepository borrowingRecordRepository ;
 
     @Autowired
     private BookRepository bookRepository;
@@ -34,8 +38,18 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public void deleteBook(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book not found"));
-        bookRepository.delete(book);
+
+
+    @Transactional
+    public void deleteBook(Long bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id: " + bookId));
+        boolean isBookBorrowed = borrowingRecordRepository.existsByBookIdAndReturnDateIsNull(bookId);
+
+        if (isBookBorrowed) {
+            throw new IllegalStateException("Cannot delete book that is currently borrowed.");
+        }
+
+        bookRepository.deleteById(bookId);
     }
 }

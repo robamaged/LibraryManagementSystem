@@ -1,4 +1,4 @@
-package config;
+package com.example.library.config;
 
 
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import user.UserRepository;
+import com.example.library.user.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor

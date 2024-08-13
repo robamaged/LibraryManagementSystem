@@ -1,4 +1,4 @@
-package Borrowing;
+package com.example.library.Borrowing;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
