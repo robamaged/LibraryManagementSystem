@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/api")
 public class BorrowingRecordController {
@@ -13,9 +15,13 @@ public class BorrowingRecordController {
     private BorrowingRecordService borrowingRecordService;
 
     @PostMapping("/borrow/{bookId}/patron/{patronId}")
-    public ResponseEntity<BorrowingRecord> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId) {
-        BorrowingRecord borrowingRecord = borrowingRecordService.borrowBook(bookId, patronId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(borrowingRecord);
+    public ResponseEntity<?> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId) {
+        try {
+            BorrowingRecord borrowingRecord = borrowingRecordService.borrowBook(bookId, patronId);
+            return new ResponseEntity<>(borrowingRecord, HttpStatus.CREATED);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 
     @PutMapping("/return/{bookId}/patron/{patronId}")
