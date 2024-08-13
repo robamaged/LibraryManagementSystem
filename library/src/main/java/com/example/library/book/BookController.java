@@ -2,6 +2,7 @@ package com.example.library.book;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +25,12 @@ public class BookController {
     }
 
     @PostMapping
-    public Book createBook(@RequestBody Book book) {
-        return bookService.saveBook(book);
+
+    public ResponseEntity<Book> createBook(@RequestBody Book book) {
+        Book savedBook = bookService.saveBook(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
+
 
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Long id) {
@@ -38,4 +42,5 @@ public class BookController {
         Book updatedBook = bookService.updateBook(id, bookDetails);
         return ResponseEntity.ok(updatedBook);
     }
+
 }

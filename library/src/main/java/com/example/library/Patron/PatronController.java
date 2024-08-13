@@ -2,6 +2,7 @@ package com.example.library.Patron;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +25,15 @@ public class PatronController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Patron createPatron(@RequestBody Patron patron) {
         return patronService.savePatron(patron);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePatron(@PathVariable Long id) {
+    public ResponseEntity<Void>  deletePatron(@PathVariable Long id) {
         patronService.deletePatron(id);
+        return ResponseEntity.noContent().build();
     }
     @PutMapping("/{id}")
     public ResponseEntity<Patron> updatePatron(@PathVariable Long id, @RequestBody @Valid Patron patronDetails) {

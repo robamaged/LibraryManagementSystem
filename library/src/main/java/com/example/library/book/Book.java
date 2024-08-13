@@ -6,8 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 
 
@@ -24,10 +23,12 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
 
-
+@Builder
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
     @jakarta.persistence.Id
     @Id
@@ -45,6 +46,14 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BorrowingRecord> borrowingRecords;
+
+    public Book(String title, String author, int publicationYear, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.publicationYear = publicationYear;
+        this.isbn = isbn;
+    }
+
 
     public void setId(Long id) {
         this.id = id;

@@ -4,13 +4,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Patron {
     @jakarta.persistence.Id
     @Id
@@ -43,5 +47,10 @@ public class Patron {
 
     public String getContactInformation() {
         return contactInformation;
+    }
+
+    public Patron(String name, String contactInformation) {
+        this.name = name;
+        this.contactInformation = contactInformation;
     }
 }

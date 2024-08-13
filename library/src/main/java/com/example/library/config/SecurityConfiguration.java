@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 .requestMatchers("/api/v1/auth/**").permitAll()// Allow access to public endpoints
                                 .requestMatchers("/api/**").permitAll()
-
+                             //   .requestMatchers("/api/books/**").permitAll()
 
                                 .anyRequest().authenticated() // Require authentication for other requests
                 )
